@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using vega.Models;
 
 namespace vega.Data
 {
@@ -8,5 +9,8 @@ namespace vega.Data
             : base(options)
         {
         }
+        
+        public DbSet<Make> Makes { get; set; }
+
     }
 }
