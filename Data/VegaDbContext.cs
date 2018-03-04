@@ -12,5 +12,6 @@ namespace vega.Data
         
         public DbSet<Make> Makes { get; set; }
         public DbSet<Feature> Features { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
     }
 }
