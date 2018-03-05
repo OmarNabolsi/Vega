@@ -4,9 +4,12 @@ using vega.Data;
 using vega.Models;
 using vega.Models.Resources;
 using System.Linq;
+using System.Threading.Tasks;
+using System;
 
 namespace vega.Controllers
 {
+    [Route("/api/vehicles")]
     public class VehiclesController : Controller
     {
         private readonly VegaDbContext context;
@@ -17,28 +20,20 @@ namespace vega.Controllers
             this.context = context;
         }
 
-        [HttpPost("/api/vehicle")]
-        public IActionResult Create([FromBody] VehicleResource vehicleResource)
+        [HttpPost()]
+        public async Task<IActionResult> CreateVehicle([FromBody] VehicleResource vehicleResource)
         {
-            /*
-            var vehicle = new Vehicle {
-                LastUpdate = vehicleResource.LastUpdate,
-                ModelId = vehicleResource.ModelId,
-                ContactName = vehicleResource.ContactName,
-                ContactPhone = vehicleResource.ContactPhone,
-                ContactEmail = vehicleResource.ContactEmail
-            };
-            */
-
             if(!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-            
-            var vehicle = this.mapper.Map<VehicleResource, Vehicle>(vehicleResource);
-            this.context.Vehicles.Add(vehicle);
-            this.context.SaveChangesAsync();
-            return Ok(vehicle);
+                return BadRequest(ModelState);
+                
+            var vehicle = mapper.Map<VehicleResource, Vehicle>(vehicleResource);
+            vehicle.LastUpdate = DateTime.Now;
+
+            context.Vehicles.Add(vehicle);
+            await context.SaveChangesAsync();
+
+            var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
+            return Ok(result);
         }
     }
 }
