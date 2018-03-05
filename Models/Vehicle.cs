@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,6 +17,8 @@ namespace vega.Models
         [Required]
         public int ModelId { get; set; }
 
+        public bool IsRegistered { get; set; }
+
         [Required]
         [StringLength(255)]
         public string ContactName { get; set; }
@@ -22,8 +26,16 @@ namespace vega.Models
         [Required]
         [StringLength(255)]
         public string ContactPhone { get; set; }
-
+        
+        [StringLength(255)]
         public string ContactEmail { get; set; }
+
+        public ICollection<VehicleFeature> Features { get; set; }
+
+        public Vehicle()
+        {
+            Features = new Collection<VehicleFeature>();
+        }
 
     }
 }
