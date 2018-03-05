@@ -13,14 +13,14 @@ namespace vega.Controllers
     [Route("/api/vehicles")]
     public class VehiclesController : Controller
     {
-        private readonly VegaDbContext context;
         private readonly IMapper mapper;
         private readonly IVehicleRepository repository;
-        public VehiclesController(VegaDbContext context, IMapper mapper, IVehicleRepository repository)
+        private readonly IUnitOfWork unitOfWork;
+        public VehiclesController(IUnitOfWork unitOfWork, IMapper mapper, IVehicleRepository repository)
         {
+            this.unitOfWork = unitOfWork;
             this.repository = repository;
             this.mapper = mapper;
-            this.context = context;
         }
 
         [HttpPost()]
@@ -33,7 +33,7 @@ namespace vega.Controllers
             vehicle.LastUpdate = DateTime.Now;
 
             repository.Add(vehicle);
-            await context.SaveChangesAsync();
+            await unitOfWork.CompleteAsync();
 
             vehicle = await repository.GetVehicle(vehicle.Id);
 
@@ -55,7 +55,7 @@ namespace vega.Controllers
             mapper.Map<SaveVehicleResource, Vehicle>(vehicleResource, vehicle);
             vehicle.LastUpdate = DateTime.Now;
 
-            await context.SaveChangesAsync();
+            await unitOfWork.CompleteAsync();
 
             var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
             return Ok(result);
@@ -68,9 +68,9 @@ namespace vega.Controllers
 
             if (vehicle == null)
                 return NotFound();
-            
+
             repository.Remove(vehicle);
-            await context.SaveChangesAsync();
+            await unitOfWork.CompleteAsync();
 
             return Ok(id);
         }
