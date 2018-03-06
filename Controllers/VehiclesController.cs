@@ -1,12 +1,12 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using vega.Data;
-using vega.Models;
-using vega.Models.Resources;
+using vega.Core.Models;
+using vega.Core.Models.Resources;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
 using Microsoft.EntityFrameworkCore;
+using vega.Core;
 
 namespace vega.Controllers
 {

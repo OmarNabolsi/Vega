@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using vega.Models.Resources;
 
-namespace vega.Models.Resources
+namespace vega.Core.Models.Resources
 {
     public class VehicleResource
     {

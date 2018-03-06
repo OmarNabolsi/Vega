@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace vega.Models.Resources
+namespace vega.Core.Models.Resources
 {
     public class ContactResource
     {

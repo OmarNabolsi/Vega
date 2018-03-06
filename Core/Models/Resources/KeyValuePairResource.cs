@@ -1,4 +1,4 @@
-namespace vega.Models.Resources
+namespace vega.Core.Models.Resources
 {
     public class KeyValuePairResource
     {

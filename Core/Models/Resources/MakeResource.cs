@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace vega.Models.Resources
+namespace vega.Core.Models.Resources
 {
     public class MakeResource : KeyValuePairResource
     {
