@@ -1,3 +1,4 @@
+import * as Raven from 'raven-js';
 import { VehicleService } from './services/vehicle.service';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form';
 import { NgModule } from '@angular/core';
@@ -11,6 +12,8 @@ import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
 import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
 import { CounterComponent } from './components/counter/counter.component';
+
+Raven.config('https://7fc4832ad37643678905ed75873d1d5a@sentry.io/299803').install();
 
 @NgModule({
     declarations: [
@@ -29,6 +32,7 @@ import { CounterComponent } from './components/counter/counter.component';
         RouterModule.forRoot([
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'vehicle/new', component: VehicleFormComponent },
+            { path: 'vehicle/:id', component: VehicleFormComponent },
             { path: 'home', component: HomeComponent },
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },

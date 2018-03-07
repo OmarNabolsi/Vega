@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+import { AppErrorHandler } from './components/app/app.error-handler';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppModuleShared } from './app.shared.module';
 import { AppComponent } from './components/app/app.component';
@@ -11,7 +12,7 @@ import { AppComponent } from './components/app/app.component';
     ],
     providers: [
         { provide: 'BASE_URL', useFactory: getBaseUrl },
-        
+        { provide: ErrorHandler, useClass: AppErrorHandler },
     ]
 })
 export class AppModule {
