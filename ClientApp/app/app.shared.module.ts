@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
-
+import { ToastyModule } from "ng2-toasty";
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
@@ -23,6 +23,7 @@ import { CounterComponent } from './components/counter/counter.component';
     ],
     imports: [
         CommonModule,
+        ToastyModule.forRoot(),
         HttpModule,
         FormsModule,
         RouterModule.forRoot([
