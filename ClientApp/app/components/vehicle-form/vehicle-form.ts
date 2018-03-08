@@ -55,6 +55,7 @@ export class VehicleFormComponent implements OnInit {
 
             if(this.vehicle.id)
                 this.setVehicle(data[2]);
+                this.populateModels();
         }, err => {
             if(err.status == 404)
                 this.router.navigate(['/home']);
@@ -71,9 +72,13 @@ export class VehicleFormComponent implements OnInit {
     }
 
     onMakeChange() {
+        this.populateModels();
+        delete this.vehicle.modelId;
+    }
+
+    private populateModels() {
         var selectedMake = this.makes.find(m => m.id == this.vehicle.makeId);
         this.models = selectedMake? selectedMake.models : [];
-        delete this.vehicle.modelId;
     }
 
     onFeatureToggle(featureId, $event) {
@@ -86,7 +91,30 @@ export class VehicleFormComponent implements OnInit {
     }
 
     submit() {
-        this.vehicleService.create(this.vehicle)
-            .subscribe(x => console.log(x));
+        if(this.vehicle.id) {
+            this.vehicleService.update(this.vehicle)
+                .subscribe(x => {
+                    this.toastyService.success({
+                        title: 'Success',
+                        msg: 'The vehicle was successfully updated.',
+                        theme: 'bootstrap',
+                        showClose: true,
+                        timeout: 5000
+                    });
+                });
+        }
+        else {    
+            this.vehicleService.create(this.vehicle)
+                .subscribe(x => console.log(x));
+        }
+    }
+
+    delete() {
+        if(confirm("Are you sure?")) {
+            this.vehicleService.delete(this.vehicle.id)
+                .subscribe(x => {
+                    this.router.navigate(['/home']);
+                });
+        }
     }
 }
