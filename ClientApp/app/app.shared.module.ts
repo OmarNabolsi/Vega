@@ -1,3 +1,4 @@
+import { VehiclesList } from './components/vehicles-list/vehicles-list';
 import * as Raven from 'raven-js';
 import { VehicleService } from './services/vehicle.service';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form';
@@ -22,7 +23,8 @@ Raven.config('https://7fc4832ad37643678905ed75873d1d5a@sentry.io/299803').instal
         CounterComponent,
         FetchDataComponent,
         HomeComponent,
-        VehicleFormComponent
+        VehicleFormComponent,
+        VehiclesList
     ],
     imports: [
         CommonModule,
@@ -30,7 +32,8 @@ Raven.config('https://7fc4832ad37643678905ed75873d1d5a@sentry.io/299803').instal
         HttpModule,
         FormsModule,
         RouterModule.forRoot([
-            { path: '', redirectTo: 'home', pathMatch: 'full' },
+            { path: '', redirectTo: 'vehicle', pathMatch: 'full' },
+            { path: 'vehicle', component: VehiclesList },
             { path: 'vehicle/new', component: VehicleFormComponent },
             { path: 'vehicle/:id', component: VehicleFormComponent },
             { path: 'home', component: HomeComponent },
