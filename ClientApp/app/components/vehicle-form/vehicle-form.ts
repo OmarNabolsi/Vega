@@ -1,12 +1,11 @@
 import * as _ from 'underscore';
-import { Contact, Vehicle } from './../../models/vehicle';
+import { Contact, Vehicle, SaveVehicle } from './../../models/vehicle';
 import { VehicleService } from './../../services/vehicle.service';
 import { Component, OnInit } from '@angular/core';
 import { ToastyService } from 'ng2-toasty';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
-import { SaveVehicle } from '../../models/vehicle';
 
 @Component({
     selector: 'vehicle-form',
@@ -101,20 +100,40 @@ export class VehicleFormComponent implements OnInit {
                         showClose: true,
                         timeout: 5000
                     });
+                    this.router.navigate(['/vehicle/', x.id]);
+                }, err => {
+                    this.toastyService.error({
+                        title: 'Failed',
+                        msg: 'Something went wrong.',
+                        theme: 'bootstrap',
+                        showClose: true,
+                        timeout: 5000
+                    });
+                    this.router.navigate(['/vehicle']);
                 });
         }
-        else {    
+        else {
             this.vehicleService.create(this.vehicle)
-                .subscribe(x => console.log(x));
+                .subscribe(x => {
+                    this.toastyService.success({
+                        title: 'Success',
+                        msg: 'The vehicle was successfully created.',
+                        theme: 'bootstrap',
+                        showClose: true,
+                        timeout: 5000
+                    });
+                    this.router.navigate(['/vehicle/', x.id]);
+                }, err => {
+                    this.toastyService.error({
+                        title: 'Failed',
+                        msg: 'Something went wrong.',
+                        theme: 'bootstrap',
+                        showClose: true,
+                        timeout: 5000
+                    });
+                    this.router.navigate(['/vehicle']);
+                });
         }
     }
 
-    delete() {
-        if(confirm("Are you sure?")) {
-            this.vehicleService.delete(this.vehicle.id)
-                .subscribe(x => {
-                    this.router.navigate(['/home']);
-                });
-        }
-    }
 }
